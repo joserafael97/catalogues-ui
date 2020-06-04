@@ -11,3 +11,12 @@
 .full-width {
     width: 30%;
 }
+
+.mat-table {
+    display: table;
+    padding-top: 2em;
+}
+
+.mat-elevation-z8 {
+    width: 100%;
+}

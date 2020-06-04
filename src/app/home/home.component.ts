@@ -23,12 +23,12 @@ export interface VendorsApi {
 export class HomeComponent implements OnInit, AfterViewInit{
 
   vendors: Vendor[] = [];
-  displayedColumns: string[] = ['select', 'id', 'name', 'cnpj', 'city', 'products',  'edit'];
   dataSource: MatTableDataSource<Vendor>;
   selection = new SelectionModel<Vendor>(true, []);
   resultsLength = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
+  currentDisplay = 'desktop';
   
   @ViewChild(MatPaginator,  {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -39,7 +39,29 @@ export class HomeComponent implements OnInit, AfterViewInit{
     private spinner: NgxSpinnerService,
     private _snackBar: MatSnackBar,
   ) {
-    
+    console.log(" window.innerWidth",  window.innerWidth)
+    this.currentDisplay = window.innerWidth <= 600 ? 'mobile' : 'desktop';
+  }
+
+  displayedColumns: string[] = ['select', 'id', 'name', 'cnpj', 'city', 'products',  'edit'];
+
+
+  columnDefinitions = [
+    { def: 'select', showMobile: true },
+    { def: 'id', showMobile: false },
+    { def: 'name', showMobile: true },
+    { def: 'cnpj', showMobile: false },
+    { def: 'city', showMobile: false },
+    { def: 'products', showMobile: true },
+    { def: 'edit', showMobile: true },
+
+  ];
+   
+  getDisplayedColumns(): string[] {
+    const isMobile = this.currentDisplay === 'mobile';
+    return this.columnDefinitions
+      .filter(cd => !isMobile || cd.showMobile)
+      .map(cd => cd.def);
   }
 
   initVendors() {

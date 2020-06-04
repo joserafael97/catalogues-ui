@@ -26,6 +26,18 @@ mat-header-cell:nth-child(5) {
     flex: 0 0 10%;
 }
 
-table {
-    width: 100%;
+
+
+body { 
+  font-family: Roboto, Arial, sans-serif;
+  margin: 0;
+}
+
+.basic-container {
+  padding: 5px;
+}
+
+.version-info {
+  font-size: 8pt;
+  float: right;
 }

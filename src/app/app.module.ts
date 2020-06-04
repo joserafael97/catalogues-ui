@@ -6,7 +6,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { TextMaskModule } from 'angular2-text-mask';
-import { CpfCnpjModule } from 'ng2-cpf-cnpj';
 
 import { AppComponent } from './app.component';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
@@ -41,7 +40,6 @@ import { AddComponent, ProductDialog} from './add/add.component';
     NgxSpinnerModule,
     AngularMaterialModule,
     TextMaskModule,
-    CpfCnpjModule,
   ],
   entryComponents: [ProductDialog],
   providers: [

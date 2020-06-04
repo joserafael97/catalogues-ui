@@ -1,4 +1,4 @@
-<mat-card class="sga-card">
+<mat-card >
 
     <mat-toolbar>
         <mat-toolbar-row>
@@ -25,12 +25,12 @@
     </mat-toolbar>
 
     <mat-card-content>
-        <div class="mat-elevation-z8" >
+        <div class="mat-elevation-z8">
 
-            <table  matSort matSortActive="name" matSortDisableClear matSortDirection="desc" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <mat-table  matSort matSortActive="name" matSortDisableClear matSortDirection="desc" mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
 
                 <!-- Checkbox Column -->
-                <ng-container matColumnDef="select">
+                <ng-container matColumnDef="select" hidden=true>
                     <th mat-header-cell *matHeaderCellDef>
                         <mat-checkbox (change)="$event ? masterToggle() : null"
                             [checked]="selection.hasValue() && isAllSelected()"
@@ -85,11 +85,11 @@
                     </td>
                 </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
-            </table>
+                <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
+                <tr mat-row *matRowDef="let element; columns: getDisplayedColumns();" ></tr>
+            </mat-table>
             <mat-paginator [length]="resultsLength" [pageSize]="10"></mat-paginator>
-            <mat-card *ngIf="dataSource.data.length === 0" style="text-align: center" class="sga-card">
+            <mat-card *ngIf="dataSource.data.length === 0" style="text-align: center" >
                 Not Found Vendors
             </mat-card>
         </div>

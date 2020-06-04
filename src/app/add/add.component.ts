@@ -28,7 +28,7 @@ export class ProductDialog {
     @Inject(MAT_DIALOG_DATA) public data: Product) {
       this.createForm(this.product);
       
-      if (data !== undefined) {
+      if (data !== undefined && data !== null) {
         this.product = data;
         this.productForm.controls['name'].setValue(data.name)
         this.productForm.controls['code'].setValue(data.code)
@@ -144,12 +144,11 @@ export class AddComponent implements OnInit {
   openDialog(product: Product): void {
     const dialogRef = this.dialog.open(ProductDialog, {
       width: '250px',
-      height: '400px',
       data: product
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined || result !== null){
+      if (result !== undefined && result !== null){
         if (this.isEditOperation){
           for (let p of this.products){
             if(result.id === p.id){
