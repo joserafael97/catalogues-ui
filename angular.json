@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/sga-ui",
+            "outputPath": "dist/catalogues-ui",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -64,18 +64,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sga-ui:build"
+            "browserTarget": "catalogues-ui:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "sga-ui:build:production"
+              "browserTarget": "catalogues-ui:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sga-ui:build"
+            "browserTarget": "catalogues-ui:build"
           }
         },
         "test": {
@@ -124,5 +124,5 @@
       }
     }
   },
-  "defaultProject": "sga-ui"
+  "defaultProject": "catalogues-ui"
 }

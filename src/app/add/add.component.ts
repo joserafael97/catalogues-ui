@@ -149,7 +149,7 @@ export class AddComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined){
+      if (result !== undefined || result !== null){
         if (this.isEditOperation){
           for (let p of this.products){
             if(result.id === p.id){

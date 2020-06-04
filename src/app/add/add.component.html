@@ -74,7 +74,7 @@
                 <section>
                     <div class="example-button-row">
                         <button type="submit" mat-raised-button color="primary">{{!isEditOperation ? 'Add Vendor': 'Edit Vendor'}}</button>
-                        <button type="button" (click)="openDialog()" mat-raised-button>Add Product</button>
+                        <button type="button" (click)="openDialog(null)" mat-raised-button>Add Product</button>
                         <button *ngIf="selection.selected.length === 1"   (click)="openDialog(selection.selected[0])"  color="accent" type="button" mat-raised-button>Edit Product</button>
                         <button *ngIf="selection.selected.length > 0" (click)="deleteSelectedProduct()" color="accent" type="button" mat-raised-button>Remove Product</button>
 
