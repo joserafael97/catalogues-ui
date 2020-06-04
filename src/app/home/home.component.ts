@@ -135,6 +135,9 @@ export class HomeComponent implements OnInit, AfterViewInit{
           verticalPosition: 'top',
           duration: 10 * 1000,
         });
+        this.paginator.pageIndex = 0;
+        this.selection.clear();
+        this.openSnackBar("Vendor(s) removed.")
         this.initVendors();
       }, error => {
           this.openSnackBar("Ops ocorreu um erro.")

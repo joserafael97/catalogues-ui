@@ -165,7 +165,7 @@ export class AddComponent implements OnInit {
           let isValid = true;
           for (let p of this.products){
               if (p.code === result.code) {
-                this.openSnackBar("Já existe um produto com este código na lista.")
+                this.openSnackBar("A Product with this code already exists in the list.")
                 isValid = false;
                 break
               }
@@ -219,6 +219,7 @@ export class AddComponent implements OnInit {
     this.vendor.name = this.vendorForm.value.name;
     this.vendor.cnpj = this.vendorForm.value.cnpj;
     this.vendor.city = this.vendorForm.value.city;
+    this.vendor.city = this.vendor.city == null ? '' : this.vendor.city;
 
   }
 
@@ -280,7 +281,7 @@ export class AddComponent implements OnInit {
     }
     
     if (error.cnpj === undefined && error.name !== undefined)
-      this.openSnackBar("ops ocorreu um erro.")
+      this.openSnackBar("an error has occurred.")
   }
 
 
@@ -291,6 +292,7 @@ export class AddComponent implements OnInit {
       this.products = this.products.reduce((p,c) => ((c.name !== product.name && product.code !== c.code) && p.push(c),p),[]);
     }
     this.spinner.hide();
+    this.openSnackBar("Product(s) removed.")
     this.dataSource.data = this.products;    
 
   }
