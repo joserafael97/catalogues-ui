@@ -21,8 +21,7 @@ To install the libraries, execute the command below inside the main repository d
 npm install
 ```
 
-### Run Rest Api
-
+### Run App
 ```
 ng serve
 
