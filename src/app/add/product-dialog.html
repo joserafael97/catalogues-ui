@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>New Product</h1>
+<form [formGroup]="productForm" (ngSubmit)="createProduct()">
+
+    <div mat-dialog-content>
+
+        <mat-form-field class="full-width">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Name" name="name" required formControlName="name">
+            <mat-error *ngIf="form.name.errors?.required">
+                Name is required
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+            <mat-label>Code</mat-label>
+            <input matInput placeholder="Code" name="code" required formControlName="code">
+            <mat-error *ngIf="form.code.errors?.required">
+                Code is required
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+            <mat-label>Price</mat-label>
+            <input type="number" matInput placeholder="Price" name="price" formControlName="price">
+            <mat-error *ngIf="form.price.errors?.min">
+                Price cannot be less than 0.
+            </mat-error>
+        </mat-form-field>
+
+    </div>
+
+    <div mat-dialog-actions>
+        <button type="button" mat-button (click)="onNoClick()">Cancel</button>
+        <button type="submit" mat-button cdkFocusInitial>{{data === undefined ? 'Add' : 'Edit'}}</button>
+    </div>
+
+</form>

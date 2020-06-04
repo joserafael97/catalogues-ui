@@ -1,0 +1,30 @@
+
+.sga-card {
+    max-width: 900px;
+
+}
+
+.main-div{
+    padding-top: 5%;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+.mat-card {
+    width: 50%;
+}
+
+.mat-card-header-text {
+    height: auto;
+    margin: 0;
+}
+
+.full-width {
+    width: 100%;
+}
+
+
+td {
+    padding-right: 8px;
+}

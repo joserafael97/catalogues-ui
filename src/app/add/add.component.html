@@ -1,0 +1,87 @@
+<div class="main-div">
+
+    <mat-card class="sga-card">
+        <mat-card-header>
+            <mat-card-title>{{!isEditOperation && !isDetailOperation ? 'New Vendor': !isDetailOperation ? 'Edit Vendor': 'Vendor Details'}} </mat-card-title>
+        </mat-card-header>
+        <form [formGroup]="vendorForm" (ngSubmit)="isEditOperation ? updateVendor() : createVendor()">
+
+            <mat-card-content>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Name" name="name" required formControlName="name">
+                    <mat-error *ngIf="form.name.errors?.required">
+                        Name is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>CNPJ</mat-label>
+                    <input [textMask]="{mask: cnpjMask}"  matInput placeholder="CNPJ" name="cnpj" required formControlName="cnpj">
+                    <mat-error *ngIf="form.cnpj.errors?.required">
+                        CNPJ is required
+                    </mat-error>
+                    <mat-error *ngIf="form.cnpj.errors?.pattern">
+                        CNPJ Invalid
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>City</mat-label>
+                    <input matInput placeholder="City" name="city" formControlName="city">
+                </mat-form-field>
+
+                <mat-card-header>
+                    <mat-card-title>Vendor Products</mat-card-title>
+                </mat-card-header>
+                <mat-card-content style="align-items: center;">
+                    <table mat-table [dataSource]="dataSource" >
+
+                        <!-- Checkbox Column -->
+                        <ng-container matColumnDef="select">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <mat-checkbox [disabled]="isDetailOperation" (change)="$event ? masterToggle() : null"
+                                    [checked]="selection.hasValue() && isAllSelected()"
+                                    [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                                </mat-checkbox>
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                <mat-checkbox [disabled]="isDetailOperation" (click)="$event.stopPropagation()"
+                                    (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                                    [aria-label]="checkboxLabel(row)">
+                                </mat-checkbox>
+                            </td>
+                        </ng-container>
+        
+                    
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef>Name</th>
+                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container >
+        
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+
+                    <mat-card style="text-align: center; width: 95%; align-items: center;" *ngIf="!products.length" >
+                        Not Found Products
+                    </mat-card>
+                
+                </mat-card-content>
+            </mat-card-content>
+            <mat-card-actions *ngIf="!isDetailOperation">
+                <section>
+                    <div class="example-button-row">
+                        <button type="submit" mat-raised-button color="primary">{{!isEditOperation ? 'Add Vendor': 'Edit Vendor'}}</button>
+                        <button type="button" (click)="openDialog()" mat-raised-button>Add Product</button>
+                        <button *ngIf="selection.selected.length === 1"   (click)="openDialog(selection.selected[0])"  color="accent" type="button" mat-raised-button>Edit Product</button>
+                        <button *ngIf="selection.selected.length > 0" (click)="deleteSelectedProduct()" color="accent" type="button" mat-raised-button>Remove Product</button>
+
+                    </div>
+                </section>
+            </mat-card-actions>
+        </form>
+      
+    </mat-card>
+</div>

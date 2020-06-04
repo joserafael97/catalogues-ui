@@ -1,0 +1,14 @@
+.sga-footer {
+    background: #ffff !important;
+    color: grey !important;
+    font-size: 5px !important;
+    height: 5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position:fixed;
+    bottom:0;
+    width:90%;
+    height:60px; 
+    background:#6cf;
+}
