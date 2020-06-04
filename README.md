@@ -1,13 +1,13 @@
-# mean-aplication-client
+# Catalogues-ui
 
 
 ## Getting Started
-Este projeto foi desenvolvido sobre a linguagem Typescript.
+This project is developed in Typescript with Angular 8 framework. 
 
 
 ### Prerequisites
+For the execution of the project it is necessary to install the following libraries
 
-Para a execução do projeto é necessário a instalação das seguintes bibliotecas 
 
 * [Node](https://nodejs.org/en/download/)
 * [NPM](https://www.npmjs.com/get-npm)
@@ -15,8 +15,7 @@ Para a execução do projeto é necessário a instalação das seguintes bibliot
 
 
 ### Installing
-
-Para instalação das bibliotecas execute o comando abaixo dentro do diretório principal do repositório.
+To install the libraries, execute the command below inside the main repository directory.
 
 ```
 npm install
