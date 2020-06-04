@@ -86,9 +86,10 @@ export class AddComponent implements OnInit {
   listaNiveis = [];
   cnpjMask =  [/[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '/', /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/];
   private vendor = new Vendor()
-  displayedColumns: string[] = ['select','name'];
+  displayedColumns: string[] = ['select','name', 'code', 'price'];
   products:Product[] = [];
   isDetailOperation = false;
+  isEditProduct = false;
   
 
   dataSource: MatTableDataSource<Product>;
@@ -142,6 +143,7 @@ export class AddComponent implements OnInit {
   }
 
   openDialog(product: Product): void {
+    this.isEditProduct = product === null ? false: true;
     const dialogRef = this.dialog.open(ProductDialog, {
       width: '250px',
       data: product
@@ -149,20 +151,30 @@ export class AddComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined && result !== null){
-        if (this.isEditOperation){
+        if (this.isEditProduct){
           for (let p of this.products){
-            if(result.id === p.id){
+            if(result.code === p.code){
               p.name = result.name;
               p.code = result.code;
               p.price = result.price;
               this.openSnackBar("Product Updated.")
               break;
-
             }
           }
         }else{
-          this.openSnackBar("New Product registered.")
-          this.products.push(result)
+          let isValid = true;
+          for (let p of this.products){
+              if (p.code === result.code) {
+                this.openSnackBar("Já existe um produto com este código na lista.")
+                isValid = false;
+                break
+              }
+          }
+          if (isValid){
+            this.openSnackBar("New Product registered.")
+            this.products.push(result)
+            this.dataSource.data = this.products
+          }
         }
     }
       
@@ -236,7 +248,6 @@ export class AddComponent implements OnInit {
   }
 
   updateVendor() {
-    console.log("=============================update call")
     this.submetido = true;
 
     if (this.vendorForm.invalid) {
@@ -277,12 +288,10 @@ export class AddComponent implements OnInit {
   deleteSelectedProduct() {
     this.spinner.show();
     for (let product of this.selection.selected){
-      this.products = this.products.filter(function( p ) {
-          return p.id !== product.id;
-      });
+      this.products = this.products.reduce((p,c) => ((c.name !== product.name && product.code !== c.code) && p.push(c),p),[]);
     }
     this.spinner.hide();
-    this.dataSource = new MatTableDataSource(this.products);    
+    this.dataSource.data = this.products;    
 
   }
 

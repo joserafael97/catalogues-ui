@@ -31,7 +31,7 @@
 
     <div mat-dialog-actions>
         <button type="button" mat-button (click)="onNoClick()">Cancel</button>
-        <button type="submit" mat-button cdkFocusInitial>{{data === undefined ? 'Add' : 'Edit'}}</button>
+        <button type="submit" mat-button cdkFocusInitial>{{data === undefined || data === null ? 'Add' : 'Edit'}}</button>
     </div>
 
 </form>
