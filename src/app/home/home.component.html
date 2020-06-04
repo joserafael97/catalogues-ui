@@ -88,7 +88,7 @@
                 <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
                 <tr mat-row *matRowDef="let element; columns: getDisplayedColumns();" ></tr>
             </mat-table>
-            <mat-paginator [length]="resultsLength" [pageSize]="10"></mat-paginator>
+            <mat-paginator [length]="resultsLength"  [pageSize]="10"></mat-paginator>
             <mat-card *ngIf="dataSource.data.length === 0" style="text-align: center" >
                 Not Found Vendors
             </mat-card>

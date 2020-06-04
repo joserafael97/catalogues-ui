@@ -39,6 +39,6 @@ export class VendorService {
     }
 
     getAllByPageAndSort(sort: string, order: string, page: number): Observable<VendorsApi> {    
-        return this.http.get<VendorsApi>(this.API_URL+`?page=${page + 1}&sort=${sort}&order=${order}`);
+        return this.http.get<VendorsApi>(this.API_URL+`?page=${page}&sort=${sort}&order=${order}`);
     }
 }

@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit, AfterViewInit{
   selection = new SelectionModel<Vendor>(true, []);
   resultsLength = 0;
   isLoadingResults = true;
-  isRateLimitReached = false;
   currentDisplay = 'desktop';
   
   @ViewChild(MatPaginator,  {static: false}) paginator: MatPaginator;
@@ -39,7 +38,6 @@ export class HomeComponent implements OnInit, AfterViewInit{
     private spinner: NgxSpinnerService,
     private _snackBar: MatSnackBar,
   ) {
-    console.log(" window.innerWidth",  window.innerWidth)
     this.currentDisplay = window.innerWidth <= 600 ? 'mobile' : 'desktop';
   }
 
@@ -65,41 +63,39 @@ export class HomeComponent implements OnInit, AfterViewInit{
   }
 
   initVendors() {
-    // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-
+    this.spinner.show();
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          console.log(this.sort)
           return this.vendorService.getAllByPageAndSort(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex);
+            this.sort.active, this.sort.direction, (this.paginator.pageIndex + 1));
         }),
         map(data => {
           this.isLoadingResults = false;
-          this.isRateLimitReached = false;
           this.resultsLength = data.count;
           return data.results;
         }),
         catchError(() => {
           this.isLoadingResults = false;
-          this.isRateLimitReached = true;
+          this.spinner.hide();
           return observableOf([]);
+          
         })
       ).subscribe(vendors_data => {
         this.vendors = vendors_data;
         this.dataSource.data = this.vendors;
-       
+        this.spinner.hide();
       });
    
   }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.vendors);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
 
   }
 
@@ -131,14 +127,11 @@ export class HomeComponent implements OnInit, AfterViewInit{
   }
 
   deleteSelectedVendor() {
-    console.log("click remove")
     this.spinner.show();
     for (let vendor of this.selection.selected){
-      console.log("click vendor id: ", vendor.id)
       this.vendorService.delete(vendor.id).subscribe(result => {
         this.spinner.hide();
         this._snackBar.openFromComponent(AlertComponent, {
-          data: "Removed Vendor " + vendor.name+".",
           verticalPosition: 'top',
           duration: 10 * 1000,
         });
