@@ -21,7 +21,7 @@ For the execution of the project it is necessary to install the following librar
 
 ### Estructure
 
-A estrutura de diretórios do projeto está descrita abaixo 
+The project directory structure is described below
 
 ```
 .
