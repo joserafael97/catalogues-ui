@@ -24,7 +24,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-   
       - name : push to staging server with ssh
         env :
             SSHPASS : ${{ secrets.SSHPASS }}
@@ -32,13 +31,10 @@ jobs:
         run : |
             sudo apt-get update 
             sudo apt-get install sshpass -y
-            npm install -g @angular/cli@6.2
+            npm install -g @angular/cli
             npm ci --debug
             ng build --prod
             cd dist/catalogues-ui/
-            sudo sshpass  -p ${SSHPASS}   -v  ssh -o StrictHostKeyChecking=no root@${SERVER} 'rm -rf /usr/share/nginx/html/*'
-            sudo sshpass -p ${SSHPASS} scp -v  -o stricthostkeychecking=no -r *.* root@${SERVER}:/usr/share/nginx/html
-               
       - name: push to heroku
         env : 
             HEROKU_REGISTRY_URL: registry.heroku.com
