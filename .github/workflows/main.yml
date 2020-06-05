@@ -35,7 +35,7 @@ jobs:
             npm install -g @angular/cli@6.2
             npm ci --debug
             ng build --prod
-            cd dist/my-first-app/
+            cd dist/catalogues-ui/
             sudo sshpass  -p ${SSHPASS}   -v  ssh -o StrictHostKeyChecking=no root@${SERVER} 'rm -rf /usr/share/nginx/html/*'
             sudo sshpass -p ${SSHPASS} scp -v  -o stricthostkeychecking=no -r *.* root@${SERVER}:/usr/share/nginx/html
                
