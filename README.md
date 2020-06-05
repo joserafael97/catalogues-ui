@@ -1,5 +1,4 @@
-![Catalogues CI](https://github.com/joserafael97/catalogues-ui/workflows/main/badge.svg?branch=master)
-
+![Build an angular project](https://github.com/joserafael97/catalogues-ui/workflows/Build%20an%20angular%20project/badge.svg)
 # Catalogues-ui
 
 
