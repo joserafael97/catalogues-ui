@@ -35,19 +35,14 @@ jobs:
             npm ci --debug
             ng build --prod
             cd dist/catalogues-ui/
-      - name: Login to Heroku Container registry
-        env: 
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:login 
-      - name: Build and push
-        env:
-           HEROKU_TOKEN : ${{ secrets.HEROKU_TOKEN }}
-        run: heroku container:push --app catalogues-ui web
-      - name: Release
-        env:
-           HEROKU_TOKEN : ${{ secrets.HEROKU_TOKEN }}
-        run: heroku container:release --app catalogues-ui web 
-      - name: heroku ps:scale 
-        env:
-           HEROKU_TOKEN : ${{ secrets.HEROKU_TOKEN }}
-        run: heroku ps:scale web=1 --app catalogues-ui
+      - name: push to heroku
+        env : 
+            HEROKU_REGISTRY_URL: registry.heroku.com
+            HEROKU_TOKEN : ${{ secrets.HEROKU_TOKEN }}
+        run : |
+            docker login --username=_ --password $HEROKU_TOKEN $HEROKU_REGISTRY_URL
+            export HEROKU_API_KEY=$HEROKU_TOKEN
+            heroku container:login
+            heroku container:push web --app catalogues-ui
+            heroku container:release web --app catalogues-ui
+            heroku ps:scale web=1 --app catalogues-ui
