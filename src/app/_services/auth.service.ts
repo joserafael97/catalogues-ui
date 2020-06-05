@@ -9,29 +9,32 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class AutenticacaoService {
+export class AuthService {
 
   private API_URL = environment.API_URL;
-  private currenContaSubject: BehaviorSubject<Account>;
-  public currentUser: Observable<Account>;
+  private USERNAME_APP = environment.username;
+  private PASSWORD_APP = environment.password;
+
+  private currentAuthsubject: BehaviorSubject<string>;
+  public currentUser: Observable<string>;
 
 
   constructor(private http: HttpClient) {
-    this.currenContaSubject = new BehaviorSubject<Account>(JSON.parse(localStorage.getItem('currentUser')));
-    this.currentUser = this.currenContaSubject.asObservable();
+    this.currentAuthsubject = new BehaviorSubject<string>(JSON.parse(localStorage.getItem('token')));
+    this.currentUser = this.currentAuthsubject.asObservable();
   }
 
-  public get currentUserValue(): Account {
-    return this.currenContaSubject.value;
+  public get currentUserValue(): string {
+    return this.currentAuthsubject.value;
   }
 
-  login(username: string, senha: string) {
-    return this.http.post<any>(this.API_URL + '/auth/login', { username, senha })
+  auth() {
+    return this.http.post<any>(this.API_URL + '/auth/', { "username": this.USERNAME_APP, "password" :this.PASSWORD_APP })
       .pipe(map(result => {
-
+    
         if (result && result.token) {
-          localStorage.setItem('currentUser', JSON.stringify(result));
-          this.currenContaSubject.next(result);
+          localStorage.setItem('token', JSON.stringify(result.token));
+          this.currentAuthsubject.next(result);
         }
 
         return result;
@@ -39,8 +42,29 @@ export class AutenticacaoService {
       }));
   }
 
-  logout() {
-    localStorage.removeItem('currentUser');
-    this.currenContaSubject.next(null);
+
+  refreshToken() {
+    return this.http.post<any>(this.API_URL + '/refresh-token/', { "token":  this.currentUserValue['token']})
+      .pipe(map(result => {
+        
+        console.log("result auth", result.token)
+        
+        if (result && result.token) {
+          localStorage.setItem('token', JSON.stringify(result.token));
+          this.currentAuthsubject.next(result);
+        }
+
+        return result;
+
+      }));
   }
+
+
+
+  removeToken() {
+    localStorage.removeItem('currentUser');
+    this.currentAuthsubject.next(null);
+  }
+
+
 }

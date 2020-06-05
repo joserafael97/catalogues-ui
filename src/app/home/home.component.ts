@@ -8,6 +8,7 @@ import { Vendor } from '../_models/vendor.class';
 import { SelectionModel } from '@angular/cdk/collections';
 import {merge, Observable, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import { AuthService } from '../_services/auth.service';
 
 export interface VendorsApi {
   results: Vendor[];
@@ -36,6 +37,7 @@ export class HomeComponent implements OnInit, AfterViewInit{
   constructor(
     private vendorService: VendorService,
     private spinner: NgxSpinnerService,
+    private authService: AuthService,
     private _snackBar: MatSnackBar,
   ) {
     this.currentDisplay = window.innerWidth <= 600 ? 'mobile' : 'desktop';
@@ -100,7 +102,10 @@ export class HomeComponent implements OnInit, AfterViewInit{
   }
 
   ngAfterViewInit() {
-    this.initVendors()
+    this.authService.auth().subscribe(token => {
+      this.initVendors()
+
+    });
   }
 
 
