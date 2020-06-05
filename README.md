@@ -1,5 +1,6 @@
 ![Build an angular project](https://github.com/joserafael97/catalogues-ui/workflows/Build%20an%20angular%20project/badge.svg)
 # Catalogues-ui
+Application for managing vendors and products.
 
 ## Deployed links app
 
@@ -43,6 +44,11 @@ npm install
 ng serve
 
 ```
+
+### Automatic Deploy
+This project uses Github Action to deploy the application to each new commit main branch. To do this, it uses the following file:
+
+* [.github/workflows/main.yml](https://github.com/joserafael97/catalogues-ui/blob/master/.github/workflows/main.yml)
 
 ## Authors
 
