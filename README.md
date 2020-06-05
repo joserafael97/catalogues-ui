@@ -1,6 +1,11 @@
 ![Build an angular project](https://github.com/joserafael97/catalogues-ui/workflows/Build%20an%20angular%20project/badge.svg)
 # Catalogues-ui
 
+## Deployed links app
+
+* [Front-end deployed](https://catalogues-ui.herokuapp.com)
+* [API docs](https://catalogues-api.herokuapp.com)
+* [Main end-point](https://catalogues-api.herokuapp.com/api/vendors)
 
 ## Getting Started
 This project is developed in Typescript with Angular 8 framework. 
