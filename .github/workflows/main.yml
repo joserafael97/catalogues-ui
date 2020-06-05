@@ -35,8 +35,6 @@ jobs:
             npm ci --debug
             ng build --prod
             cd dist/catalogues-ui/
-            sudo sshpass  -p ${SSHPASS}   -v  ssh -o StrictHostKeyChecking=no root@${SERVER} 'rm -rf /usr/share/nginx/html/*'
-            sudo sshpass -p ${SSHPASS} scp -v  -o stricthostkeychecking=no -r *.* root@${SERVER}:/usr/share/nginx/html
       - name: push to heroku
         env : 
             HEROKU_REGISTRY_URL: registry.heroku.com
