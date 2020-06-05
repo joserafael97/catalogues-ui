@@ -1,4 +1,5 @@
-![Catalogues CI](https://github.com/joserafael97/catalogues-api/workflows/main/badge.svg?branch=master)
+![Catalogues CI](https://github.com/joserafael97/catalogues-ui/workflows/main/badge.svg?branch=master)
+
 # Catalogues-ui
 
 
