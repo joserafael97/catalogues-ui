@@ -24,3 +24,23 @@
 td {
     padding-right: 8px;
 }
+
+.card-empty {
+    text-align: center; 
+    width: 95%; 
+    align-items: center;
+    margin: 0 auto; 
+    padding-left: 0;
+}
+
+@media only screen and (max-width: 600px) {
+    .mat-card {
+        width: 100%;
+        margin: 0 auto;
+    } 
+
+    .card-empty {
+       width: 92%;
+       margin: 0 auto; 
+    }
+}

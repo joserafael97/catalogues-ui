@@ -76,7 +76,7 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
 
-                    <mat-card style="text-align: center; width: 95%; align-items: center;" *ngIf="!products.length" >
+                    <mat-card class="card-empty" *ngIf="!products.length" >
                         Not Found Products
                     </mat-card>
                 
