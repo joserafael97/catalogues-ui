@@ -24,25 +24,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name : push to staging server with ssh
-        env :
-            SSHPASS : ${{ secrets.SSHPASS }}
-            SERVER : ${{ secrets.SERVER}}
-        run : |
-            sudo apt-get update 
-            sudo apt-get install sshpass -y
-            npm install -g @angular/cli
-            npm ci --debug
-            ng build --prod
-            cd dist/catalogues-ui/
-      - name: push to heroku
-        env : 
-            HEROKU_REGISTRY_URL: registry.heroku.com
-            HEROKU_TOKEN : ${{ secrets.HEROKU_TOKEN }}
-        run : |
-            docker login --username=_ --password $HEROKU_TOKEN $HEROKU_REGISTRY_URL
-            export HEROKU_API_KEY=$HEROKU_TOKEN
-            heroku container:login
-            heroku container:push web --app catalogues-ui
-            heroku container:release web --app catalogues-ui
-            heroku ps:scale web=1 --app catalogues-ui
+      - name: Login to Heroku Container registry
+        env: 
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login 
+      - name: Build and push
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} web 
+      - name: Release
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web 
